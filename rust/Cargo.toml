@@ -1,0 +1,6 @@
+[package]
+name = "eulered"
+version = "NaN"
+authors = ["Gavin Leech <g@gleech.org>"]
+
+[dependencies]
