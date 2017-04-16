@@ -1,0 +1,6 @@
+scala/.idea/*
+scala/target
+scala/project
+scala/src/main/target
+scala/*/*.class
+*$.class
