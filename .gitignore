@@ -4,3 +4,14 @@ scala/project
 scala/src/main/target
 scala/*/*.class
 *$.class
+*.hi
+*.o
+
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
