@@ -4,16 +4,11 @@
     Find the sum of all the primes below two million.
 -}
 
-m = 2000000 - 1
-terminator p xs = span (< p^2) xs
-divisors p t = [x | x <- t, x `mod` p /= 0]
-recurse ps p t = sieve ps (divisors p t)
-sieve (p:ps) xs 
-    | (h,t) <- terminator p xs = h ++ recurse ps p t
+import Utils (primes)
 
-primes = 2 : sieve primes [3, 5..] 
-primesUpTo n = takeWhile (<=n) primes
-answer = sum $ primesUpTo m
+
+primesUpTo n = takeWhile (<n) primes
+answer = sum $ primesUpTo 2000000
 
 main = do
     print $ sum (primesUpTo(10)) == 17

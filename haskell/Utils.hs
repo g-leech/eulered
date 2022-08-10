@@ -8,7 +8,7 @@ import Data.List ((\\))
 
 
 (¬) = not
-
+all' xs = all (==True) xs
 between x y z = if (x <= y) then (y <= z) 
                 else False
 
@@ -30,6 +30,14 @@ toList n
 
 fromList n = foldl (\x y -> 10*x+y) 0 n
 
+toBin 0 = []
+toBin n = toBin (n `div` 2) ++ [n `mod` 2] 
+
+toStr sep xs = foldr (\a b-> glue a b) "" xs
+            where 
+                glue a b = a ++ sepit b
+                sepit b = (if b=="" then b 
+                            else sep ++ b)
 
 fac n = foldl1 (*) [2..n]
 
@@ -40,16 +48,26 @@ factor n (p:ps)
     | otherwise    = factor n ps
 isOwnOnlyFactor n = (n == (factor n primes) !! 0)
 primes = 2 : filter isOwnOnlyFactor [3,5..]
+
 factorPrimes :: Int -> [Int]
 factorPrimes n = factor n primes
 
 
-fastprimes = 2 : filter ((==1) . length . primeFactors) [3,5..]
+fastprimes = 2 : filter hasOneFactor [3,5..]
+            where hasOneFactor = ((==1) . length . primeFactors)
 primeFactors n = factor n fastprimes
 isPrime 1 = False
 isPrime n = case (primeFactors n) of
                 (_:_:_)   -> False
                 _         -> True
+
+-- terminator p xs = span (< p^2) xs
+-- divisors p t = [x | x <- t, x `mod` p /= 0]
+-- recurse ps p t = sieve ps (divisors p t)
+-- sieve (p:ps) xs 
+--     | (h,t) <- terminator p xs  =   h ++ recurse ps p t
+
+-- primes = 2 : sieve primes [3, 5..] 
 
 
 sameValues x y = null (x \\ y) && null (y \\ x)

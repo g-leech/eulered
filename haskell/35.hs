@@ -14,11 +14,10 @@ rotate n xs = before ++ after
 rots n = map fromList rotations
     where 
         xs = toList n
-        rotations = map (\x -> rotate x xs) [1..length xs]
+        rotations = map (\x -> rotate x xs) [1 ..length xs]
 
 isCircular n = all isPrime $ rots n
-circularPrimes p = filter isCircular oddsAndTwo
-                    where oddsAndTwo = 2 : [3,5..p]
+circularPrimes p = filter isCircular $ 2 : [3, 5 ..p]
 nCirculars p = length $ circularPrimes p
 
 answer = length $ circularPrimes 1000000
@@ -32,9 +31,9 @@ main = do
 
 
 -- Strat 1: Generate rotations, then check if they're a subset of the primes. 
-    -- Extremely slow. Down to my rotations
--- Why? Generates all primes, then does an expensive subset op for each rot
+    -- Extremely slow. 
+    -- Why? Generates all primes, then does an expensive subset op for each rot
 circularPrimes' p primes subset = filter (\x -> subset x ps) rs
                     where 
                         rs = map rots ps 
-                        ps = takeWhile (<p) primes 
+                        ps = takeWhile (<p) primes
