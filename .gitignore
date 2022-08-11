@@ -4,8 +4,6 @@ scala/project
 scala/src/main/target
 scala/*/*.class
 *$.class
-*.hi
-*.o
 
 # Ignore all
 *
@@ -15,3 +13,6 @@ scala/*/*.class
 
 # Unignore all dirs
 !*/
+
+*.hi
+*.o

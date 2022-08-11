@@ -1,0 +1,36 @@
+{-
+    The number 3797 has an interesting property. Being prime, it is possible to continuously remove digits from left to right, 
+    and remain prime at each stage: 3797, 797, 97, and 7. 
+    Similarly we can work from right to left: 3797, 379, 37, and 3.
+
+    Find the sum of the only eleven primes that are both truncatable from left to right and right to left.
+
+    NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
+-}
+import Utils (isPrime,primes,toList,fromList)
+
+-- Strat 1: Break type theorist kayfabe and cast to and from list
+
+floor' = 7
+
+-- truncateR 
+init' x = x `div` 10
+-- Grody truncateL
+tail' :: Int -> Int
+tail' x = fromList (tail (toList x))
+
+trunc n f
+    | n < 10     = True
+    | otherwise  = isPrime (f n) && trunc (f n) f
+
+truncatable n = (trunc n init' 
+                    && trunc n tail') 
+                    && n > floor'
+
+
+answer = sum $ take 11 $ filter truncatable primes
+
+main = do
+    print $ truncatable 3797
+    print $ truncatable 5
+    print $ answer

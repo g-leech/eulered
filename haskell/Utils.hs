@@ -28,7 +28,7 @@ toList n
         snip = n `mod` 10
         recurse n = toList $ n `div` 10
 
-fromList n = foldl (\x y -> 10*x+y) 0 n
+fromList xs = foldl (\x y -> 10*x+y) 0 xs
 
 toBin 0 = []
 toBin n = toBin (n `div` 2) ++ [n `mod` 2] 
@@ -54,10 +54,9 @@ factorPrimes n = factor n primes
 
 
 fastprimes = 2 : filter hasOneFactor [3,5..]
-            where hasOneFactor = ((==1) . length . primeFactors)
-primeFactors n = factor n fastprimes
+            where hasOneFactor = ((==1) . length . factorPrimes)
 isPrime 1 = False
-isPrime n = case (primeFactors n) of
+isPrime n = case (factorPrimes n) of
                 (_:_:_)   -> False
                 _         -> True
 
