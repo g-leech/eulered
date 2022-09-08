@@ -121,3 +121,5 @@ perms xs = do
     return (x:zs)
 
 maxOn f = maximumBy (compare `on` f)
+
+isCoprime a b = gcd a b == 1

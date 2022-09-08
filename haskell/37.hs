@@ -9,9 +9,10 @@
 -}
 import Utils (isPrime,primes,toList,fromList)
 
--- Strat 1: Break type theorist kayfabe and cast to and from list
+-- Strat 1: Break functional kayfabe and cast to and from list
 
 floor' = 7
+cap = 11
 
 -- truncateR 
 init' x = x `div` 10
@@ -23,12 +24,12 @@ trunc n f
     | n < 10     = True
     | otherwise  = isPrime (f n) && trunc (f n) f
 
-truncatable n = (trunc n init' 
-                    && trunc n tail') 
-                    && n > floor'
+truncatable n = (trunc n init' && 
+                trunc n tail') && 
+                n > floor'
 
 
-answer = sum $ take 11 $ filter truncatable primes
+answer = sum $ take cap $ filter truncatable primes
 
 main = do
     print $ truncatable 3797

@@ -8,6 +8,14 @@
 import Utils (toList,fromList,isPrime,sameValues)
 
 
+split' l xs = (take l xs, drop l xs)
+split n xs
+    | n == 0 = split' 0 xs
+    -- | n >= l = split' l xs
+    | l `mod` n == 0 = split' (l `div` n) xs 
+    | otherwise = split' ((l `div` n) + 1) xs
+    where l = length xs
+
 rotate n xs = before ++ after
     where (after,before) = splitAt n xs
 
@@ -23,9 +31,11 @@ nCirculars p = length $ circularPrimes p
 answer = length $ circularPrimes 1000000
 
 main = do
+    print $ rotate 1 [1,2,3]
     print $ nCirculars 100 == 13
     print $ rots 197 `sameValues` [197, 971, 719]
     print $ answer
+
 
 
 
