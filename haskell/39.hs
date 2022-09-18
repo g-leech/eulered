@@ -10,6 +10,7 @@
 -- Strat 2: there are only two dof, use em
 -- Strat 3: coprimality
 -- Strat 4: solve the system
+-- Halve the time by doing b from a+1
 -- Substrat x. Domain hack: Bigger number, more partitions, more chances
 -- Substrat y. Bigger, increasing nonlinear gap, less chance 
 
@@ -28,8 +29,7 @@ answer = fst $ maxOn snd (pairs 1000)
 
 main = do
     print $ (numSolutions 120) == 3
-    -- print $ answer
-    print $ typeOf (floor (sqrt 25))
+    print $ answer
 
 
 

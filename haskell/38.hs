@@ -21,7 +21,8 @@ isPandig d n
     | nIsBetween = take n (sort ds) == [1..n]   
     | otherwise  = False
     where
-        nIsBetween = if (n <= l) then (l <= 9) else False
+        nIsBetween = if (n <= l) then (l <= 9) 
+                     else False
         ds = toList d
         l = length $ ds
 
@@ -31,8 +32,8 @@ concIsPandig a n = isPandig (concProd a n) 9
 cap n = 10 ^ (9 `div` n) - 1
 -- TODO: check if this is executing concProd twice per loop or gets thunked
 getNPandigs n = [ concProd x n | let a = cap n, 
-                           x <- [a, a-1 ..1],
-                           concIsPandig x n ]
+                               x <- [a, a-1 ..1],
+                               concIsPandig x n ]
 answer = maximum $ concat [ getNPandigs n | n <- [2..9] ]
 
 main = do

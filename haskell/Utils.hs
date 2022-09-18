@@ -72,6 +72,12 @@ isPrime n = case (factorPrimes n) of
 sameValues x y = null (x \\ y) && null (y \\ x)
 
 
+zip' :: [a] -> [b] -> [(a,b)]
+zip' (a:as) (b:bs) = (a,b) : zip as bs
+zip' _      _      = []
+
+mapreduce f xs = foldl1 (*) $ map f xs
+
 
 powerset [] = [[]]
 powerset (x:xs) = [ x:ps | ps<-pow ] ++ pow
