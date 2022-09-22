@@ -10,9 +10,10 @@
 -- Strat 2: generate permutations betwen 1..9 and 9..1. 
 -- Strat 3: generate all n-digits descending, cleverly.
 
-
 import Utils (perms, isPrime, fromList)
 
+
+-- Strat 2: generate permutations betwen 1..9 and 9..1. 
 -- don't need the evens
 oddify xs = filter (\x -> isEven (last x) ) xs
     where isEven x = x `mod` 2 /= 0

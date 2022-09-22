@@ -19,6 +19,7 @@ assert :: Bool -> String
 assert False = error "assertion failed!"
 assert _     = "ok"
 
+
 dedupe xs = nubOrd xs
 subset a b = null [x | x<-a, elem x b == False]
 
@@ -31,6 +32,7 @@ toList n
         snip = n `mod` 10
         recurse n = toList $ n `div` 10
 
+-- only works with single-digits 
 fromList xs = foldl (\x y -> 10*x+y) 0 xs
 
 toBin 0 = []
@@ -129,7 +131,6 @@ look_up (x:xs) s | not(x == s)  = fmap (1 +) (look_up xs s)
 picks [] = []
 picks (x:xs) = [(xs,x)] ++ rest
             where rest = [(x:ys,y) | (ys,y) <- picks xs]
-
 perms [] = [[]]
 perms xs = do
     (ys,x) <- picks xs
@@ -139,3 +140,11 @@ perms xs = do
 maxOn f = maximumBy (compare `on` f)
 
 isCoprime a b = gcd a b == 1
+
+-- sumBools = foldl (flip ((+) . fromEnum)) 0
+
+
+disquote = map (filter (/= '"')) 
+decsv = map (split ',')
+preproc file = disquote . sort . concat . 
+                decsv $ lines file
