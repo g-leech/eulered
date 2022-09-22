@@ -11,6 +11,7 @@ toBin n = toBin (n `div` 2) ++ [n `mod` 2]
 
 isPalindrome [] = True
 isPalindrome [x] = True
+-- eat from both ends
 isPalindrome (x:xs) 
     | x == last xs  = isPalindrome (init xs) 
     | otherwise     = False

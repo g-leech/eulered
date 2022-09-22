@@ -16,6 +16,8 @@
 
 import Utils (maxOn)
 
+cap = 1000
+
 -- Strat 2. n^2. 4 seconds with O2.
 isRight a b c = c^2 == (a^2 + b^2)
 triplesWithP p = [ [a, b, c] | a<-[1 ..p], b<-[a+1 ..p],
@@ -23,8 +25,8 @@ triplesWithP p = [ [a, b, c] | a<-[1 ..p], b<-[a+1 ..p],
                                 isRight a b c 
                  ]
 numSolutions p = length $ triplesWithP p
-pairs n = [ (p, numSolutions p) | p<-[1..n] ]  
-answer = fst $ maxOn snd (pairs 1000)
+pairs n = zip [1..n] (map numSolutions [1..n])
+answer = fst $ maxOn snd (pairs cap)
 
 
 main = do

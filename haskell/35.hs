@@ -11,7 +11,6 @@ import Utils (toList,fromList,isPrime,sameValues)
 split' l xs = (take l xs, drop l xs)
 split n xs
     | n == 0 = split' 0 xs
-    -- | n >= l = split' l xs
     | l `mod` n == 0 = split' (l `div` n) xs 
     | otherwise = split' ((l `div` n) + 1) xs
     where l = length xs

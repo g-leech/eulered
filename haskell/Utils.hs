@@ -11,6 +11,9 @@ import Data.List ((\\))
 all' xs = all (==True) xs
 between x y z = if (x <= y) then (y <= z) 
                 else False
+any' :: [Bool] -> Bool
+any' = any (==True)
+
 
 assert :: Bool -> String
 assert False = error "assertion failed!"
@@ -77,6 +80,13 @@ zip' (a:as) (b:bs) = (a,b) : zip as bs
 zip' _      _      = []
 
 mapreduce f xs = foldl1 (*) $ map f xs
+
+
+-- Numeric tail!
+tail' x = x `mod` 10^y
+    where 
+        y = floor (log fx / log 10) 
+        fx = fromIntegral x
 
 
 powerset [] = [[]]
