@@ -10,13 +10,10 @@ If the word value is a triangle number then we shall call the word a triangle wo
 Using words.txt (right click and 'Save Link/Target As...'), a 16K text file containing nearly two-thousand common English words, how many are triangle words?
 -}
 
-import Data.List (elemIndex)
-import Data.Maybe (fromMaybe)
-import Utils (split, sort, preproc)
-
+import Utils (split, sort, preproc, find)
 
 alpha = '0':['A'..'Z']
-num c = fromMaybe (-1) $ elemIndex c alpha
+num c = find c alpha
 numsum word = sum $ map num word
 
 triangle n = (n * (n+1)) `div` 2

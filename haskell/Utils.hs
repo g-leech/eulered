@@ -5,6 +5,8 @@ import Data.Containers.ListUtils (nubOrd)
 import Data.List (maximumBy)
 import Data.Function (on)
 import Data.List ((\\))
+import Data.List (elemIndex)
+import Data.Maybe (fromJust)
 
 
 (¬) = not
@@ -22,6 +24,7 @@ assert _     = "ok"
 
 dedupe xs = nubOrd xs
 subset a b = null [x | x<-a, elem x b == False]
+find x xs = fromJust (elemIndex x xs)
 
 -- "explode"
 -- toList :: Integer -> [Integer]
@@ -137,6 +140,7 @@ perms xs = do
     zs     <- perms ys
     return (x:zs)
 
+cumsum = scanl1 (+)
 maxOn f = maximumBy (compare `on` f)
 
 isCoprime a b = gcd a b == 1
