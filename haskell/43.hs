@@ -25,10 +25,8 @@ splits x = map (split x) [6,5..0]
 detuple f (a, b) = f a b
 pairmod = detuple mod
 
-hasSubstringPrimeDivs x = all (==0) remains
-    where
-        z = zip (splits x) (take 7 primes)
-        remains = map pairmod z
+hasSubstringPrimeDivs x = all (==0) (map pairmod z)
+    where z = zip (splits x) (take 7 primes)
 
 pandigs x = map fromList (perms x)
 answer = sum $ filter hasSubstringPrimeDivs $ pandigs [9,8..0]

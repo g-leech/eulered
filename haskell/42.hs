@@ -21,8 +21,9 @@ triangles = map triangle [1..]
 isTriangleWord w = s `elem` (takeWhile (<=s) triangles)
         where s = numsum w
 
-sumbools = foldl (flip ((+) . fromEnum)) 0
-answer txt = sumbools . map isTriangleWord $ preproc txt
+is = filter (==True)
+answer txt = length . is . map isTriangleWord ls
+    where ls = preproc txt
 
 
 main = do

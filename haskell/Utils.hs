@@ -37,6 +37,8 @@ toList n
 
 -- only works with single-digits 
 fromList xs = foldl (\x y -> 10*x+y) 0 xs
+isInt x = x == fromInteger (round x)
+
 
 toBin 0 = []
 toBin n = toBin (n `div` 2) ++ [n `mod` 2] 
@@ -48,6 +50,7 @@ toStr sep xs = foldr (\a b-> glue a b) "" xs
                             else sep ++ b)
 
 fac n = foldl1 (*) [2..n]
+
 
 isFactor p n = n `mod` p == 0
 factor n (p:ps)
@@ -78,6 +81,11 @@ isPrime n = case (factorPrimes n) of
 
 
 sameValues x y = null (x \\ y) && null (y \\ x)
+
+allSame [x] = True
+allSame (x:xs) 
+    | x == head xs = allSame xs
+    | otherwise = False
 
 
 zip' :: [a] -> [b] -> [(a,b)]

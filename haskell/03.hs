@@ -3,8 +3,6 @@
     What is the largest prime factor of the number 600851475143 ?
 -}
 
-import Utils
-
 {-
     Terminator: if n is composite, then ∃ a prime factor p <= sqrt(n)
     https://proofwiki.org/wiki/Composite_Number_has_Prime_Factor_not_Greater_Than_its_Square_Root
@@ -26,7 +24,7 @@ factor n (p:ps)
 isOwnOnlyFactor n = (n == (factor n primes) !! 0)
 primes = 2 : filter isOwnOnlyFactor [3,5..]
 
-primeFaxxors n = dedupe (factor n primes)
+primeFaxxors n = factor n primes
 
 
 main = do
