@@ -2,10 +2,8 @@ module Utils where
 
 -- import Data.List
 import Data.Containers.ListUtils (nubOrd)
-import Data.List (maximumBy)
 import Data.Function (on)
-import Data.List ((\\))
-import Data.List (elemIndex)
+import Data.List ((\\),maximumBy, elemIndex,findIndex,isPrefixOf,tails)
 import Data.Maybe (fromJust)
 
 
@@ -25,6 +23,9 @@ assert _     = "ok"
 dedupe xs = nubOrd xs
 subset a b = null [x | x<-a, elem x b == False]
 find x xs = fromJust (elemIndex x xs)
+--  looks for the first occurrence of a sublist `sub` in the list, returns index of 1st element of `sub`
+subIndex sub str = fromJust $ findIndex (isPrefixOf sub) (tails str)
+
 
 -- "explode"
 -- toList :: Integer -> [Integer]
@@ -35,7 +36,7 @@ toList n
         snip = n `mod` 10
         recurse n = toList $ n `div` 10
 
--- only works with single-digits 
+-- only works with single-digit elements
 fromList xs = foldl (\x y -> 10*x+y) 0 xs
 isInt x = x == fromInteger (round x)
 
@@ -62,7 +63,6 @@ primes = 2 : filter isOwnOnlyFactor [3,5..]
 
 factorPrimes :: Int -> [Int]
 factorPrimes n = factor n primes
-
 
 fastprimes = 2 : filter hasOneFactor [3,5..]
             where hasOneFactor = ((==1) . length . factorPrimes)

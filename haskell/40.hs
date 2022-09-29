@@ -14,6 +14,7 @@
 -- Strat 4: construct fractional constant up to n then div and mod
     -- (123456789101112 `div` 10^(l - n)) `mod` 10
 
+-- # hidden lines: 1
 import Utils (find)
 
 

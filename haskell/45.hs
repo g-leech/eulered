@@ -13,6 +13,7 @@
     -- a = 2 =, b = -1, c = -1
     -- 1 + sqrt(1 + 8n) / 4
 
+-- # hidden lines: 5
 import Utils (allSame, isInt)
 
 
@@ -20,6 +21,7 @@ triagonal n = n * (n + 1) `div` 2
 pentagonal n = n * (3*n - 1) `div` 2
 hexagonal n = n * (2*n - 1)
 
+isPent :: Int -> Bool
 isPent n = isInt $ (sqrt(24 * nf + 1) + 1) / 6
     where nf = fromIntegral n
 isHex n = isInt $ (sqrt(8 * nf + 1) + 1) / 4
@@ -33,4 +35,4 @@ answer = head $ [tri | t<-[x+1..],
 
 main = do
     print $ allSame [hexagonal 143, pentagonal 165, triagonal 285]
-    print $ answer
+    print $ answer 

@@ -10,6 +10,7 @@
 -- Strat 2: generate permutations betwen 1..9 and 9..1. 
 -- Strat 3: generate all n-digits descending, cleverly.
 
+-- # hidden lines: 13
 import Utils (perms, isPrime, fromList)
 
 

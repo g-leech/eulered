@@ -10,6 +10,7 @@ If the word value is a triangle number then we shall call the word a triangle wo
 Using words.txt (right click and 'Save Link/Target As...'), a 16K text file containing nearly two-thousand common English words, how many are triangle words?
 -}
 
+-- # hidden lines: 10
 import Utils (split, sort, preproc, find)
 
 alpha = '0':['A'..'Z']

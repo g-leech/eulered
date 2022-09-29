@@ -12,6 +12,7 @@
     Find the sum of all 0 to 9 pandigital numbers with this property.
 -}
 
+-- # hidden lines: 14
 import Utils (perms,fromList,primes)
 
 {-
@@ -40,7 +41,7 @@ main = do
 
 
 -- Cleaner but slow 
-pairmod' xs = map modp [0..6]
-    where 
-        ps = take 7 primes
-        modp j = (xs !! j) `mod` (ps !! j)
+-- pairmod' xs = map modp [0..6]
+--     where 
+--         ps = take 7 primes
+--         modp j = (xs !! j) `mod` (ps !! j)

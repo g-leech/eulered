@@ -1,10 +1,17 @@
-import Utils (fastprimes)
+import Data.List
 
-x :: Int
-x = 10 
--- 1 * 10 * 100 * 1000 * 10000 * 100000 * 1000000
-log10 x = log x / log 10
-diglen x = (floor $ log10 x) + 1
+problem_47 = find (all ((==4).snd)) . map (take 4) . tails 
+                 . zip [1..] . map (length . factors) $ [1..]
+fstfac x = [(head a ,length a) | a <- group $ primeFactors x]
+fac [(x,y)] = [x^a | a <- [0..y]]
+fac (x:xs) = [a*b | a <- fac [x], b <- fac xs]
+factors x = fac $ fstfac x
+primes = 2 : filter ((==1) . length . primeFactors) [3,5..]
 
+primeFactors n = factor n primes
+  where factor _ [] = []
+        factor m (p:ps) | p*p > m        = [m]
+                        | m `mod` p == 0 = [p, m `div` p]
+                        | otherwise      = factor m ps
 main = do
-    print $ fastprimes
+    print $ problem_47

@@ -9,10 +9,12 @@
 
     What is the smallest odd composite that cannot be written as the sum of a prime and twice a square?
 -}
+-- Strat 1: LINEARRRR, one pass over the primes plus an inverse for twice square
+-- Is 0^2 a square? Yes.
 
+-- # hidden lines: 10
 import Utils (primes,isPrime,isInt,any',(¬))
 
--- Strat 1: LINEARRRR
 
 isTwiceSquare x = isInt $ sqrt(fx / 2)
     where fx = fromIntegral x
