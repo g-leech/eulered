@@ -24,7 +24,8 @@ dedupe xs = nubOrd xs
 subset a b = null [x | x<-a, elem x b == False]
 find x xs = fromJust (elemIndex x xs)
 --  looks for the first occurrence of a sublist `sub` in the list, returns index of 1st element of `sub`
-subIndex sub str = fromJust $ findIndex (isPrefixOf sub) (tails str)
+rawSubIndex sub str = findIndex (isPrefixOf sub) (tails str)
+subIndex sub str = fromJust $ rawSubIndex sub str
 
 
 -- "explode"
@@ -71,6 +72,13 @@ isPrime n = case (factorPrimes n) of
                 (_:_:_)   -> False
                 _         -> True
 
+powerset [] = [[]]
+powerset (x:xs) = [ x:ps | ps<-pow ] ++ pow
+                    where pow = powerset xs
+divisors n = dedupe . map product . 
+                powerset $ factorPrimes n
+
+
 -- terminator p xs = span (< p^2) xs
 -- divisors p t = [x | x <- t, x `mod` p /= 0]
 -- recurse ps p t = sieve ps (divisors p t)
@@ -101,12 +109,11 @@ tail' x = x `mod` 10^y
         y = floor (log fx / log 10) 
         fx = fromIntegral x
 
+-- Numeric concat (for fixed-width elements)
+concatNums n j [x] = j + x
+concatNums n j (x:xs) = concatNums n ((j + x)*10^n) xs
 
-powerset [] = [[]]
-powerset (x:xs) = [ x:ps | ps<-pow ] ++ pow
-                    where pow = powerset xs
-divisors n = dedupe . map product . 
-                powerset $ factorPrimes n
+
 
 
 replace old new char = map $ \char -> if char == old then new else char
@@ -148,6 +155,9 @@ perms xs = do
     zs     <- perms ys
     return (x:zs)
 
+isPerm m n = slist m == slist n 
+    where slist = sort . toList 
+
 cumsum = scanl1 (+)
 maxOn f = maximumBy (compare `on` f)
 
@@ -160,3 +170,16 @@ disquote = map (filter (/= '"'))
 decsv = map (split ',')
 preproc file = disquote . sort . concat . 
                 decsv $ lines file
+
+-- Maybeify
+map' _ []     = []
+map' f (x:xs) = 
+    let rs = map' f xs in
+    case f x of
+        Nothing -> rs
+        Just r  -> r:rs
+
+doUntilFalse _ [] = Nothing
+doUntilFalse f xs = if f (last xs)
+                    then Just xs 
+                    else doUntilFalse f (init xs)
