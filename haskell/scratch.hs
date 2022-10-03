@@ -1,17 +1,37 @@
-import Data.List
+nand True True = False
+nand _    _    = True
 
-problem_47 = find (all ((==4).snd)) . map (take 4) . tails 
-                 . zip [1..] . map (length . factors) $ [1..]
-fstfac x = [(head a ,length a) | a <- group $ primeFactors x]
-fac [(x,y)] = [x^a | a <- [0..y]]
-fac (x:xs) = [a*b | a <- fac [x], b <- fac xs]
-factors x = fac $ fstfac x
-primes = 2 : filter ((==1) . length . primeFactors) [3,5..]
+--- and is double nand: nand of nand 
+and' a b = nand self self
+        where self = nand a b
 
-primeFactors n = factor n primes
-  where factor _ [] = []
-        factor m (p:ps) | p*p > m        = [m]
-                        | m `mod` p == 0 = [p, m `div` p]
-                        | otherwise      = factor m ps
+--- or is triple nand: nand of twice left nand and twice right nand
+or' a b = nand aa bb
+      where 
+        aa = nand a a
+        bb = nand b b
+
+-- not is single nand: nand of twice self 
+not' a = nand a a
+
+-- xor is quadruple nand: nand of left-nand nand and right-nand nand
+xor a b = nand a_ab ab_b
+    where
+        ab = nand a b
+        a_ab = nand a ab
+        ab_b = nand ab b
+
+
+nor a b = nand aabb aabb
+    where
+        aa = nand a a 
+        bb = nand b b
+        aabb = nand aa bb 
+
+
+
 main = do
-    print $ problem_47
+    print $ nor True True
+    print $ nor True False
+    print $ nor False True
+    print $ nor False False

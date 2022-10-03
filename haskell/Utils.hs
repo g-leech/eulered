@@ -171,15 +171,7 @@ decsv = map (split ',')
 preproc file = disquote . sort . concat . 
                 decsv $ lines file
 
--- Maybeify
-map' _ []     = []
-map' f (x:xs) = 
-    let rs = map' f xs in
-    case f x of
-        Nothing -> rs
-        Just r  -> r:rs
 
-doUntilFalse _ [] = Nothing
-doUntilFalse f xs = if f (last xs)
-                    then Just xs 
-                    else doUntilFalse f (init xs)
+filterTilFalse _ [] = []
+filterTilFalse f xs = if f (last xs) then xs 
+                      else filterTilFalse f (init xs)
