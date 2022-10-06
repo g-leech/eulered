@@ -5,8 +5,6 @@
     Find the sum of all the multiples of 3 or 5 below 1000.
 -}
 
-import Utils
-
 m = 999 
 multp x p = x `mod` p == 0
 isMult3or5 x = multp x 3 || multp x 5

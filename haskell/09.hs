@@ -4,7 +4,6 @@
 -}
 
 isTriple a b c = c^2 == (a^2 + b^2)
-
 triples l = concat [ [a, b, c] | a<-[1..500], b<-[1..a],
             let c = l - a - b,
             isTriple a b c

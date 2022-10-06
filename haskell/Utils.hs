@@ -68,13 +68,14 @@ primes = 2 : filter isOwnOnlyFactor [3,5..]
 
 factorPrimes :: Int -> [Int]
 factorPrimes n = factor n primes
-
-fastprimes = 2 : filter hasOneFactor [3,5..]
-            where hasOneFactor = ((==1) . length . factorPrimes)
+-- Shots fired
 isPrime 1 = False
 isPrime n = case (factorPrimes n) of
                 (_:_:_)   -> False
                 _         -> True
+-- fastprimes = 2 : filter hasOneFactor [3,5..]
+            -- where hasOneFactor = ((==1) . length . factorPrimes)
+
 
 powerset [] = [[]]
 powerset (x:xs) = [ x:ps | ps<-pow ] ++ pow
