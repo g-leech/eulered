@@ -3,8 +3,9 @@ module Utils where
 -- import Data.List
 import Data.Containers.ListUtils (nubOrd)
 import Data.Function (on)
-import Data.List ((\\),maximumBy, elemIndex,findIndex,isPrefixOf,tails)
+import Data.List ((\\),maximumBy,elemIndex,findIndex)
 import Data.Maybe (fromJust)
+import qualified Data.Set as Set
 
 
 (¬) = not
@@ -24,8 +25,11 @@ dedupe xs = nubOrd xs
 subset a b = null [x | x<-a, elem x b == False]
 find x xs = fromJust (elemIndex x xs)
 --  looks for the first occurrence of a sublist `sub` in the list, returns index of 1st element of `sub`
-rawSubIndex sub str = findIndex (isPrefixOf sub) (tails str)
 subIndex sub str = fromJust $ rawSubIndex sub str
+rawSubIndex sub str = findIndex (prefixes sub) (tails str)
+prefixes pre xs = all' $ map (\x -> fst x == snd x) $ zip pre xs
+tails [] = []
+tails xs = [xs] ++ tails (drop 1 xs)
 
 
 -- "explode"
@@ -114,7 +118,10 @@ concatNums n j [x] = j + x
 concatNums n j (x:xs) = concatNums n ((j + x)*10^n) xs
 
 
-
+replaceAt n new (x:xs)
+   | n == 0     = new:xs
+   | otherwise  = x:rec
+   where rec = replaceAt (n-1) new xs
 
 replace old new char = map $ \char -> if char == old then new else char
 remove e xs = filter (not . (`elem` e)) xs
@@ -135,8 +142,6 @@ sort (p:xs) = (sort lesser) ++ [p] ++ (sort greater)
         lesser  = filter (< p) xs
         greater = filter (>= p) xs
 
--- Absurd.
-p x = putStrLn $ x
 -- listP xs = putStrLn $ intercalate " " (map show xs)
 
 -- get index of s
@@ -160,17 +165,17 @@ isPerm m n = slist m == slist n
 
 cumsum = scanl1 (+)
 maxOn f = maximumBy (compare `on` f)
+-- apply f n times to x
+fpow n f x = iterate f x !! n
 
 isCoprime a b = gcd a b == 1
 
 -- sumBools = foldl (flip ((+) . fromEnum)) 0
 
-
 disquote = map (filter (/= '"')) 
 decsv = map (split ',')
 preproc file = disquote . sort . concat . 
                 decsv $ lines file
-
 
 filterTilFalse _ [] = []
 filterTilFalse f xs = if f (last xs) then xs 
