@@ -15,6 +15,17 @@ import Data.List (findIndices)
 -- Note 3: spurious solutions like 0011 don't count
 -- Strat 1: numbers as digit lists, wildcard -1s. Must be a simpler way but I hate stringifying.
 
+-- Take family of numbers (as single flat wildcarded list), count primes
+getNulls = findIndices (==(-1))
+replaceAll _ _ [] = []
+replaceAll old new (x:xs) = if old == x then new : rec
+                            else x : rec
+                            where rec = replaceAll old new xs 
+family xs = filter (>=10) $ map fromList members
+    where 
+        members = map plugin [0..9]
+        plugin j = replaceAll (-1) j xs
+
 -- Gen all families
 wildcards a = concatMap exhaustiveWilds possiblePrimes
     where possiblePrimes = filter notDiv5 [a,a+2..]
@@ -50,18 +61,7 @@ main = do
 
 
 
---------------------------------------
--- Take family of numbers (as single flat wildcarded list), count primes
-getNulls = findIndices (==(-1))
-replaceAll _ _ [] = []
-replaceAll old new (x:xs) = if old == x then new : rec
-                            else x : rec
-                            where rec = replaceAll old new xs 
-family xs = filter (>=10) $ map fromList members
-    where 
-        members = map plugin [0..9]
-        plugin j = replaceAll (-1) j xs
 
-countPrimes xs = length $ filter isPrime xs
-countFamPrimes = countPrimes . family 
+-- countPrimes xs = length $ filter isPrime xs
+-- countFamPrimes = countPrimes . family 
 --------------------------------------
