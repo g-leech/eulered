@@ -53,9 +53,13 @@ toStr sep xs = foldr (\a b-> glue a b) "" xs
             where 
                 glue a b = a ++ sepit b
                 sepit b = (if b=="" then b 
-                            else sep ++ b)
-
-fac n = foldl1 (*) [2..n]
+                           else sep ++ b)
+fac n 
+    | n < 2 = 1
+    | otherwise  = foldl1 (*) [1..n]
+(!) = fac
+binom n k = (!)n `div` denom
+    where denom  = (!)k * (!)(n-k)
 
 
 isFactor p n = n `mod` p == 0

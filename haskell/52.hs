@@ -11,8 +11,9 @@ canon = sort . toList
 allSame xs = and $ zipWith (==) cs (tail cs)
     where cs = map canon xs
 series x = map (x *) [1..6]
-multiples = map series [1..]
-answer = head $ head $ filter allSame $ multiples
+
+answer = head . head $ filter allSame multiples
+    where multiples = map series [1..]
 
 main = do
     print $ answer
