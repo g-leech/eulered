@@ -3,6 +3,7 @@ module Utils where
 -- import Data.List
 import Data.Containers.ListUtils (nubOrd)
 import Data.Function (on)
+import Data.Char (ord)
 import Data.List ((\\),maximumBy,elemIndex,findIndex)
 import Data.Maybe (fromJust)
 import qualified Data.Set as Set
@@ -104,6 +105,15 @@ allSame (x:xs)
     | x == head xs = allSame xs
     | otherwise = False
 
+group [] = []
+group zs = loop [x] x xs
+  where
+      (x:xs) = sort zs
+      loop acc next [] = [acc]
+      loop acc next (y:ys)
+        | y == next = loop (y:acc) next ys
+        | otherwise = acc : loop [y] y ys
+
 
 zip' :: [a] -> [b] -> [(a,b)]
 zip' (a:as) (b:bs) = (a,b) : zip as bs
@@ -141,6 +151,11 @@ chunk n l
   | otherwise = error "bad n"
 
 
+digitToInt c
+  | (fromIntegral dec) <= 9 = dec
+  | otherwise = error "not digit" 
+  where dec = ord c - ord '0'
+  
 sort []     = []
 sort (p:xs) = (sort lesser) ++ [p] ++ (sort greater)
     where

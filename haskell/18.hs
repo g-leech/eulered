@@ -4,13 +4,10 @@
 
 {-
     Strats
-
     1. Essentially brute force: Standard recursive nonsense 
     2. Treat as actual typed binary tree
     3. DP. Fold over rowmax + nextrowmax, starting at the end.
 -}
-
-
 pyramid = [
     [75],
     [95, 64],
@@ -36,11 +33,11 @@ test = [[3],
 -- Strat 1
 -- Go top to bottom, add max of subtrees
 maxPath i j xs
-    | isInbounds = currentval + max leftSubTree rightSubTree
-    | otherwise = currentval
+    | isInbounds = current + max leftSubTree rightSubTree
+    | otherwise = current
     where
         isInbounds = nextRow < length xs
-        currentval = xs !! i !! j
+        current = xs !! i !! j
         (nextRow, nextRight) = (i+1, j+1)
         leftSubTree = maxPath nextRow j xs
         rightSubTree = maxPath nextRow nextRight xs
