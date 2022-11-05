@@ -9,8 +9,9 @@
     How many hands does Player 1 win?
 -}
 -- Hidden lines: 23
-import Utils (preproc,split,find,sort,dedupe,maxOn,group)
+import Utils (preproc,split,find,sort,dedupe,maxOn,group,digitToInt)
 
+-- longwinded and pedestrian solution, but The Right Way custom types
 -- TODO: check nth highest card in case of double tie
 type Card = (Int, Char)
 type Hand = [Card]
@@ -22,11 +23,11 @@ data Ranks = HighCard(Int) | Pair(Int) |
                deriving (Eq,Ord)
 
 hand :: [String] -> Hand
-hand xs = zip (cardsToInt xs) (char xs) 
+hand xs = zip (cardsToInt xs) (suitInt xs) 
     where 
         valToInt x = find x "23456789TJQKA"
         cardsToInt = map (valToInt . head)
-        char xs = map (!! 0) $ map tail xs
+        suitInt xs = map (!! 0) $ map tail xs
 
 score :: Hand -> Ranks
 score hand

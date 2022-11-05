@@ -151,6 +151,7 @@ chunk n l
   | otherwise = error "bad n"
 
 
+
 digitToInt c
   | (fromIntegral dec) <= 9 = dec
   | otherwise = error "not digit" 
@@ -179,7 +180,6 @@ perms xs = do
     (ys,x) <- picks xs
     zs     <- perms ys
     return (x:zs)
-
 isPerm m n = slist m == slist n 
     where slist = sort . toList 
 
