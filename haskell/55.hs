@@ -27,7 +27,6 @@ isPalindrome (x:xs)
     | x == last xs  = isPalindrome (init xs) 
     | otherwise     = False
 
-
 isUnderNLychrel :: Int -> Integer -> Bool
 isUnderNLychrel n x
     | n == 0 = True
