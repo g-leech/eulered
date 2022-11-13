@@ -191,6 +191,7 @@ fpow n f x = iterate f x !! n
 isCoprime a b = gcd a b == 1
 
 -- sumBools = foldl (flip ((+) . fromEnum)) 0
+count f xs = length $ filter f xs
 
 disquote = map (filter (/= '"')) 
 decsv = map (split ',')
@@ -200,3 +201,11 @@ preproc file = disquote . sort . concat .
 filterTilFalse _ [] = []
 filterTilFalse f xs = if f (last xs) then xs 
                       else filterTilFalse f (init xs)
+
+fint = fromIntegral
+updateMean :: Float -> Int -> [Int] -> Float
+updateMean mean pastN news = (mean * n' + newSum) / (n' + l)
+    where 
+        newSum = fint $ sum news
+        n' = fint pastN
+        l = fint $ length news

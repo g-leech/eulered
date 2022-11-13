@@ -39,7 +39,7 @@ score hand
         vals = sort $ map fst hand
         hi = maximum vals
         run = [head vals..last vals]
-        -- ace can start a low straight:
+        -- ace can start a low straight, so or:
         isStraight = vals == run || vals == [12,0,1,2,3]
         suits = map snd hand
         isFlush = length (dedupe suits) == 1
@@ -54,8 +54,9 @@ counts vals = case numOfVals of {
             otherwise -> HighCard (maximum vals)
         }
         where
-            numOfVals = sort $ map length (group vals)
-            mode = head . maxOn length $ group vals
+            gs = group vals
+            numOfVals = sort $ map length gs
+            mode = head $ maxOn length gs
 
 players :: FilePath -> ([Hand],[Hand])
 players f = (map fst games, map snd games) 

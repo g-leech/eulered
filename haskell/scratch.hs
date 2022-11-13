@@ -1,6 +1,6 @@
-import Utils (preproc,split,replace,digitToInt,find,sort,dedupe,maxOn)
-import Data.Char (ord)
+import Utils (isPrime)
 
+answer = 1
 
 main = do
-    print $ ord 'A'
+    print $ answer
