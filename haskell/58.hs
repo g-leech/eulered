@@ -32,6 +32,7 @@ diagPrimeRatio (nPrimes,nCorners) candidate
     | topOrLeftAndPrime = (nPrimes+1, nCorners+1)
     | otherwise         = (nPrimes,   nCorners+1)
     where 
+        -- Hack: bottom right diag has no primes by definition (perfect squares)
         notOnBottomRight = nCorners `mod` 4 /= 0
         topOrLeftAndPrime = notOnBottomRight && isPrime candidate
 
