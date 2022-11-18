@@ -141,8 +141,8 @@ replaceAt n new (x:xs)
 replace old new char = map $ \char -> if char == old then new else char
 remove e xs = filter (not . (`elem` e)) xs
 split c xs = case break (==c) xs of 
-  (ls, "") -> [ls]
-  (ls, x:rs) -> ls : split c rs
+              (ls, "") -> [ls]
+              (ls, x:rs) -> ls : split c rs
 
 chunk :: Int -> [a] -> [[a]]
 chunk _ [] = []
