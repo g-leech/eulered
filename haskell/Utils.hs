@@ -4,7 +4,7 @@ module Utils where
 import Data.Containers.ListUtils (nubOrd)
 import Data.Function (on)
 import Data.Char (ord)
-import Data.List ((\\),maximumBy,elemIndex,findIndex)
+import Data.List ((\\),maximumBy,elemIndex,findIndex,delete)
 import Data.Maybe (fromJust)
 import qualified Data.Set as Set
 
@@ -182,6 +182,13 @@ perms xs = do
     return (x:zs)
 isPerm m n = slist m == slist n 
     where slist = sort . toList 
+
+-- alt
+permute [] = [[]]
+permute xs = concatMap traverse xs
+    where 
+        traverse x = map (x:) $ permute (sans x)
+        sans x = delete x xs
 
 cumsum = scanl1 (+)
 maxOn f = maximumBy (compare `on` f)
