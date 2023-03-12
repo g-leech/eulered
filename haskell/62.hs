@@ -5,13 +5,14 @@
 
     Find the smallest cube for which exactly 5 permutations are cube.
 --}
-
--- Just going to stringify this time
-
 -- TODO: speed up my `group` 
 import Utils (find,sort,group)
 
 
+-- Strat 1: generate cubes, sort digits for a canonical form, 
+-- find group of canonicals with size 5.
+-- Just going to stringify this time
+-- TODO: remove weasel parameter `n` somehow
 solve i n = root^3
     where 
         -- start at zero cos we're reusing indices for roots
