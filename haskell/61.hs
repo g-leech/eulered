@@ -47,7 +47,6 @@ figurates :: Int -> [Int]
 figurates i = scanl (+) 1 [i-1, 2*i-3 ..]
 figurates3to8 = map (boundSet . figurates) [3..8]
     where boundSet = fromList . takeWhile (< 10000) . dropWhile (< 1011)
--- can take `head` since we're told it's unique
 answer = sum $ solve figurates3to8
 
 
