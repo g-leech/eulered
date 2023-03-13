@@ -12,11 +12,9 @@ import Utils (find,sort,group)
 -- Strat 1: generate cubes, sort digits for a canonical form, 
 -- find group of canonicals with size 5.
 -- Just going to stringify this time
--- TODO: remove weasel parameter `n` somehow
-solve i n = root^3
+solveN i n = (canonicalSolution, canonicals) 
     where 
         -- start at zero cos we're reusing indices for roots
-        -- TODO: dynamically expand if search empty
         cubes = map (^3) [0..10^n]
         -- into canonical form
         canonicals = map (sort . show) cubes
@@ -24,13 +22,25 @@ solve i n = root^3
         -- and get groups of size i
         targetLengthGroups = filter ((==i) . length) $ group canonicals
         -- each group has identical members so head, then min
-        canonicalSolution = minimum $ map head targetLengthGroups
+        canonicalSolution = map head targetLengthGroups 
+
+expandingSearch i n
+    | canonicalSolution == [] = expandingSearch i (n+1)
+    | otherwise = (canonicalSolution, canonicals)
+    where 
+        (canonicalSolution, canonicals) = solveN i n
+        
+-- Iteratively expand the search. 
+-- Prevents false positives and weasel parameter on number of cubes to search over
+solve i = root^3
+    where
+        (canonicalSolution, canonicals) = expandingSearch i 2
         -- go back and get the index, which is the root of our solution
-        root = find canonicalSolution canonicals
+        root = find (minimum canonicalSolution) canonicals
 
 -- need more headroom to find 5 permutations
-answer = solve 5 4
+answer = solve 5
 
 main = do
-    print $ solve 3 3 == 41063625
+    print $ solve 3 == 41063625
     print $ answer 
