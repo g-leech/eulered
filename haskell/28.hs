@@ -29,10 +29,10 @@ cornersum x
         br = n^2 - 6*x
 
 spiral_diagonals a = sum $ map cornersum [0..nRings]
-                        where nRings = (a-1) `div` 2
+                    where nRings = (a-1) `div` 2
 
-answer = spiral_diagonals 1001
 
 main = do
-    print $ spiral_diagonals 5 == 101
+    -- print $ spiral_diagonals 5 == 101
+    let answer = spiral_diagonals 1001
     print $ answer

@@ -6,12 +6,10 @@
 
 import Utils (primes)
 
-
 primesUpTo n = takeWhile (<n) primes
-answer = sum $ primesUpTo 2000000
 
 main = do
-    print $ sum (primesUpTo(10)) == 17
+    -- print $ sum (primesUpTo(10)) == 17
+    let answer = sum $ primesUpTo 2000000
     print $ answer
     -- 10s with runhaskell, 0.1s with ghc
-

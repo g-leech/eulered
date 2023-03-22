@@ -13,16 +13,18 @@
 import Utils (split, sort)
 import Data.Char (ord)
 
-disquote = map (filter (/= '"')) 
-decsv = map (split ',')
-preproc file = disquote . sort . concat . 
-                decsv $ lines file
-lexico s = map (\x -> ord x - 64) s
-alphavals xs = map (sum . lexico) xs
+preproc file = disquote . sort . concat . decsv $ lines file
+    where
+        disquote = map (filter (/= '"')) 
+        decsv = map (split ',')
+
 scores xs = zipWith (*) (alphavals xs) [1..]
-answer xs = sum $ scores xs
+    where
+        lexico s = map (\x -> ord x - 64) s
+        alphavals xs = map (sum . lexico) xs
 
 
 main = do
     raw <- readFile "data/p022_names.txt" 
+    let answer xs = sum $ scores xs
     print $ answer $ preproc raw

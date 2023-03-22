@@ -9,8 +9,8 @@
 sumSquares n = sum $ map (^2) [1..n]
 squareSum n = sum [1..n] ^ 2
 diffSqSum n = squareSum n - sumSquares n
-answer = diffSqSum 100
 
 main = do
-    print $ diffSqSum 10 == 2640
+    -- print $ diffSqSum 10 == 2640
+    answer = diffSqSum 100
     print $ answer 

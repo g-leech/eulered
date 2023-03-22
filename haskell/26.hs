@@ -14,9 +14,7 @@
 -- Strat 3: extra fr https://mathworld.wolfram.com/MultiplicativeOrder.html
 -- Strat 4: Fermat's little theorem
 
-import Utils (maxOn, primes)
-
-n = 999
+import Utils (maxOn)
 
 {-
     Strat 4
@@ -30,22 +28,23 @@ n = 999
     
     also: coprime to 10 or else terminating
 -}
-isDiv5 n = n `rem` 5 == 0 
 isCoprimeTo10 n = not (isDiv5 n || even n)
+    where isDiv5 n = n `rem` 5 == 0 
 
 -- let a terminating number have cyclelen 0 (1 also fine)
 -- `head`: min p | d divides (10^p - 1)
-cycleLen d | isCoprimeTo10 d = head powersOfDivs
-           | otherwise = 0
-            where
-                  flt p = (10^p - 1) `rem` d
-                  isDivD p = flt p == 0
-                  powersOfDivs = filter isDivD [1..]
+cycleLen d
+    | isCoprimeTo10 d = head powersOfDivs
+    | otherwise = 0
+    where
+      -- fermat
+      flt p = (10^p - 1) `rem` d
+      divides p = flt p == 0
+      powersOfDivs = filter divides [1..]
 
--- skip evens; they all terminate. 
-answer = maxOn cycleLen [1,3..n]
-
-    
 main = do
-    print $ cycleLen 7 == 6
+    -- print $ cycleLen 7 == 6
+    -- skip evens; they all terminate. 
+    let n = 999
+    let answer = maxOn cycleLen [1,3..n]
     print $ answer

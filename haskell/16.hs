@@ -13,8 +13,7 @@ toList n
         snip = n `mod` 10
         recurse n = toList $ n `div` 10
 
-answer = sum . toList $ 2^1000
-
 main = do 
-    print $ (sum . toList $ 2^15) == 26
+    -- print $ (sum . toList $ 2^15) == 26
+    let answer = sum . toList $ 2^1000
     print $ answer

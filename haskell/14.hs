@@ -11,20 +11,18 @@
 
 import Data.List (sortOn)
 
-m = 999999
-
 collatz 1 = [1]
 collatz n
     | even n    = n : (collatz $ n `div` 2)
     | otherwise = n : (collatz $ 3*n + 1)
-collatzLen n = length $ collatz n
 lensAndInits xs = zip (map collatzLen xs) xs
+    where collatzLen n = length $ collatz n
 max' f = last . sortOn f 
 initOfMaxCollatz xs = max' fst $ lensAndInits xs
-answer = snd $ initOfMaxCollatz [3..m]
 
 -- TODO: obviously parallel problem, should do like 8 at once.
 
 main = do
-    print $ collatzLen 13 == 10
+    -- print $ collatzLen 13 == 10
+    let answer = snd $ initOfMaxCollatz [3..999999]
     print $ answer

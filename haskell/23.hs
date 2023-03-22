@@ -7,7 +7,7 @@
     n is abundant if this sum > n.
 
     12 is the smallest abundant number, 1 + 2 + 3 + 4 + 6 = 16, 
-    so the smallest number that can be written as the sum of two abundant numbers is 24. 
+    so 24 is the smallest sum of two abundant numbers
     it can be shown that all integers greater than 28123 can be written as two abundant numbers. 
 
     this upper limit cannot be reduced any further by analysis 
@@ -15,29 +15,24 @@
 
     Find the sum of all the positive integers which are not binary-composite-abundant
 -}
-import Utils (divisors,dedupe,(¬))
+import Utils (divisors,(¬))
 
-n = 28123
 
-propaDivisors n = filter (<n) $ divisors n
-divSum n = sum $ propaDivisors n
 isAbundant n = n < divSum n
-abundants = filter isAbundant [1..]
+    where
+        propaDivisors n = filter (<n) $ divisors n
+        divSum n = sum $ propaDivisors n
 
 -- Strat 1: Seeking a + b = abundant; so try isAbundant(b - abundant)
 -- What can't be written as the sum of two abundant numbers
-isNotSum2Abundants n = (¬) $ any diffIsAbundant abunsHalf
+isNotSum2Abundants n = (¬) (any diffIsAbundant abunsHalf)
                     where
                         diffIsAbundant k = isAbundant (n-k)
+                        abundants = filter isAbundant [1..]
                         abunsHalf = takeWhile (<= n `div` 2) abundants
 
-answer = sum $ filter (isNotSum2Abundants) [1..n]
-
 main = do
-    print $ isAbundant 12 == True
-    print $ (dedupe $ map isAbundant [1..11]) == [False]
-    print $ not (isNotSum2Abundants 24) 
+    -- print $ isAbundant 12 == True
+    let answer = sum $ filter (isNotSum2Abundants) [1..28123]
     print $ answer
 
-    -- isPerfect n = n == divSum n
-    -- print $ isPerfect 28 == True

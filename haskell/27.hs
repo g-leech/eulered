@@ -14,21 +14,23 @@ import Utils (primes, maxOn, divisors)
         Let n = 0. See that b is prime
         Let n = 1. Then (1 + a + b) is prime, and b is prime, so a is odd unless b=2.
 -}
-aLim = 999
-as = 2 : [-aLim,-aLim+2 .. aLim]
-bs = takeWhile (<=1000) primes
-
-isPrime n | n < 1 = False
-          | otherwise = (divisors n) == [n,1]
-quad a b n = n^2 + a*n + b
+isPrime n 
+    | n < 1 = False
+    | otherwise = (divisors n) == [n,1]
 nConsecutivePrimes (a, b) = length $ takeWhile isPrime formulae
-                            where formulae = [quad a b n | n <- [0..]]
+                            where
+                                formulae = [quad a b n | n <- [0..]]
+                                quad a b n = n^2 + a*n + b
 
 coefficients = [(a, b) | a <-as, b <-bs]
-(a', b') = maxOn nConsecutivePrimes coefficients
-answer = a' * b'
+    where
+        u = 999
+        as = 2 : [-u,-u+2 .. u]
+        bs = takeWhile (<=1000) primes
 
 main = do
-    print $ all (== True) $ map isPrime (map (quad 1 41) [0..39])
-    print $ nConsecutivePrimes (1, 41)
+    -- print $ all (== True) $ map isPrime (map (quad 1 41) [0..39])
+    -- print $ nConsecutivePrimes (1, 41)
+    let (a, b) = maxOn nConsecutivePrimes coefficients
+    let answer = a * b
     print $ answer

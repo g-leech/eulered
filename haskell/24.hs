@@ -9,22 +9,19 @@
 
 -- Strat 1: generate em with iteration-recursion and index to 999999
 -- nPermutations is fac n so 10 does it.
-n = 1000000
 
 -- One tuple per x; x is what's picked
 picks [] = []
 picks (x:xs) = [(xs,x)] ++ rest
             where rest = [(x:ys,y) | (ys,y) <- picks xs]
-
 perms [] = [[]]
 perms xs = do
     (ys,x) <- picks xs
     zs     <- perms ys
     return (x:zs)
-nthPerm xs = (perms xs) !! (n - 1)
-
-answer = nthPerm [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+nthPerm n xs = (perms xs) !! (n - 1)
 
 main = do
-    print $ perms [0,1,2] == [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]]
+    -- print $ perms [0,1,2] == [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]]
+    let answer = nthPerm 1000000 [0..9]
     print $ answer

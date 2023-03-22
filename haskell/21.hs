@@ -7,11 +7,11 @@
 import Utils (factorPrimes, dedupe, sort)
 
 
-m = 10000 - 1
 powerset [] = [[]]
 powerset (x:xs) = [ x:ps | ps<-pow ] ++ pow
                     where pow = powerset xs
 divisors n = dedupe . map product . powerset $ factorPrimes n
+
 propaDivisors n = filter (<n) $ divisors n
 areAmicable a b sums = (sums !! a == b) && (sums !! b == a)
 
@@ -24,11 +24,10 @@ amicables n = [ a+b |
                 dsum i = sum (propaDivisors i)
                 divSums = 0 : [ dsum i | i <- [1..n]]
 
-answerNaive = sum $ amicables m
-
 
 main = do
-    print $ (sort $ propaDivisors 220) == [1,2,4,5,10,11,20,22,44,55,110]
-    let divSums = 0 : [ sum (propaDivisors i) | i <- [1..300]]
-    print $ areAmicable 220 284 divSums
+    -- print $ (sort $ propaDivisors 220) == [1,2,4,5,10,11,20,22,44,55,110]
+    -- let divSums = 0 : [ sum (propaDivisors i) | i <- [1..300]]
+    -- print $ areAmicable 220 284 divSums
+    let answerNaive = sum $ amicables (10000 - 1)
     print $ answerNaive

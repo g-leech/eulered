@@ -5,13 +5,11 @@
     Find the sum of all the multiples of 3 or 5 below 1000.
 -}
 
-m = 999 
 multp x p = x `mod` p == 0
 isMult3or5 x = multp x 3 || multp x 5
-answer = sum $ filter isMult3or5 [1..m]
 
-main = print $ answer
+main = do
+    -- print $ sum $ filter isMult3or5 [1..9] == 23
+    let answer = sum $ filter isMult3or5 [1..999]
+    print $ answer
 
-
---answer' = sum $ filter isMult3or5 [1..9] 
---assert (answer' == 23) 

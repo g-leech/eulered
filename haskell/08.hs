@@ -13,9 +13,8 @@ ints = map strToInts preprocessed
 -- -- for runs larger than 13, get all subruns
 allRuns = concat (map (tails) ints)
 take13s = filter (\xs -> length xs == 13) allRuns
-answer = maximum $ map product take13s
- 
 
 main = do
+    let answer = maximum $ map product take13s
     print $ answer
     

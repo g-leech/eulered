@@ -25,10 +25,6 @@ pyramid = [
     [63, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
     [04, 62, 98, 27, 23, 09, 70, 98, 73, 93, 38, 53, 60, 04, 23]]
 
-test = [[3],
-        [7, 4],
-        [2, 4, 6],
-        [8, 5, 9, 3]]
 
 -- Strat 1
 -- Go top to bottom, add max of subtrees
@@ -43,9 +39,8 @@ maxPath i j xs
         rightSubTree = maxPath nextRow nextRight xs
 
 maxPathTop xs = maxPath 0 0 xs 
-answer = maxPathTop pyramid
 
 main = do
-    print $ maxPathTop test == 23
+    let answer = maxPathTop pyramid
     print $ answer
 

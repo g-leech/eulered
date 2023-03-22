@@ -6,30 +6,24 @@
 import Utils (factorPrimes,group)
 
 {-
-    Strat
-    Speedup via counting prime factor combis, over trial division
-    Speedup via laziness and `head` 
+    Strat 2
+    Speedup via counting prime factor combis
+    Speedup via laziness
 -}
-p = 500
-tenTriangles = [1, 3, 6, 10, 15, 21, 28, 36, 45, 55]
 
 triangulars = scanl1 (+) [1..]
 -- one entry per divisor
 groupedPrimeFactors n = group (factorPrimes n)
--- add 1 for `1`, then prod for # factor combinations
-nDivisors n = product . map succ . lens
-    where lens = map length $ groupedPrimeFactors n
+-- add 1 for the missing `1` factor, then prod for # factor combinations
+nDivisors n = product $ map (succ . length) grps
+    where grps = groupedPrimeFactors n
 
-ix = length [ x | x <- takeWhile (<=p) $ map nDivisors triangulars ] 
-answer = triangulars !! ix
+ix cap = length [ x | x <- takeWhile (<=cap) numDivs ] 
+        where numDivs = map nDivisors triangulars
 
 main = do
-    print $ (take 10 triangulars) == tenTriangles
+    let answer = triangulars !! (ix 500)
     print $ answer
-
-
-
-
 
 
 {-

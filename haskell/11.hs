@@ -34,11 +34,11 @@ rint = read :: String->Int
 ll = [ map rint s | s <- bigrams ]
 
 -- index-free solution. Doesn't scale.
-allFours l = map (take n) . concat $ map tails l
 transpose ([]:_) = []
 transpose x = map head x : transpose (map tail x)
 
 --Don't need left because product. Same with up.
+allFours l = map (take n) . concat $ map tails l
 right = allFours ll 
 down = allFours $ transpose ll
 
@@ -48,13 +48,13 @@ zip4x4 row col ixs = zipWith ($) (map (drop) ixs) (winnow row col)
 diag row col ixs = map head $ zip4x4 row col ixs 
 diagRight row col = diag row col [0..3]
 diagLeft row col = diag row col [3,2..0]
-startToMinus3 = [0..16]
-diags = [diagRight row col | row <-startToMinus3, col <-startToMinus3] 
-            ++
-        [diagLeft row col | row <- [3..19], col <-startToMinus3]
 
+diags = [diagRight row col | row <-toMinus3, col <-toMinus3] 
+            ++
+        [diagLeft row col | row <- [3..19], col <-toMinus3]
+        where toMinus3 = [0..16]
 permutations = map product $ right ++ down ++ diags
-answer = maximum $ permutations
 
 main = do
+    let answer = maximum $ permutations
     print $ answer

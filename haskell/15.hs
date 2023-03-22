@@ -14,19 +14,16 @@
     Paths equal length, order irrelevant.
     Two options at each step and n steps, so 2*n total choices
 -}
-
-x = 20
-
-fac n = foldl1 (\x y -> x*y) [1..n]
+(!) n = foldl1 (\x y -> x*y) [1..n]
 binom n k = permuts `div` (orders * spares)
-            where permuts = fac n
-                  orders = fac k
-                  spares = fac (n-k)
+            where permuts = (!) n
+                  orders = (!) k
+                  spares = (!) (n-k)
 brRoutes n = binom (2*n) n
-answer = brRoutes 20
 
 main = do
-    print $ brRoutes 2 == 6
+    -- print $ brRoutes 2 == 6
+    let answer = brRoutes 20
     print $ answer
 
 

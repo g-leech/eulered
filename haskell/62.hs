@@ -24,8 +24,8 @@ solveN i n = (canonicalSolution, canonicals)
         -- each group has identical members so head, then min
         canonicalSolution = map head targetLengthGroups 
 
-expandingSearch i n
-    | canonicalSolution == [] = expandingSearch i (n+1)
+expandSearch i n
+    | canonicalSolution == [] = expandSearch i (n+1)
     | otherwise = (canonicalSolution, canonicals)
     where 
         (canonicalSolution, canonicals) = solveN i n
@@ -34,13 +34,11 @@ expandingSearch i n
 -- Prevents false positives and weasel parameter on number of cubes to search over
 solve i = root^3
     where
-        (canonicalSolution, canonicals) = expandingSearch i 2
+        (canonicalSolution, canonicals) = expandSearch i 2
         -- go back and get the index, which is the root of our solution
         root = find (minimum canonicalSolution) canonicals
 
--- need more headroom to find 5 permutations
-answer = solve 5
-
 main = do
-    print $ solve 3 == 41063625
-    print $ answer 
+    -- print $ solve 3 == 41063625
+    let answer = solve 5
+    print $ answer

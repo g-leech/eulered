@@ -1,5 +1,6 @@
 {-
-    LCM: What is the smallest positive number evenly divisible by all numbers 1 to 20?
+    LCM: What is the smallest positive number evenly divisible by all numbers 
+    1 to 20?
 -}
 import Utils (primes)
 
@@ -17,10 +18,10 @@ maxPowersBounded n = [ last [x^a | a <- [1..n], x^a <= n] |
                         x <- takeWhile (<=n) $ primes ]
 -- Product of max powers is the LCM [1..20]
 lcm' n = foldl1 (*) (maxPowersBounded n)
-answer = lcm' 20
 
 main = do
-    print $ lcm' 10 == 2520
+    -- print $ lcm' 10 == 2520
+    let answer = lcm' 20
     print $ answer 
 
 

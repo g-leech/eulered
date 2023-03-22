@@ -9,9 +9,9 @@
 import Utils (toList)
 
 fac n = foldl1 (*) [2..n]
-digitSum n = foldl (+) 0 (toList $ fac n)
-
-answer = digitSum 100
+digitSum n = foldl (+) 0 facList
+    where facList = toList $ fac n
 
 main = do
+    let answer = digitSum 100
     print $ answer

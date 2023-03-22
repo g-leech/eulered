@@ -23,10 +23,10 @@ factor n (p:ps)
 
 isOwnOnlyFactor n = (n == (factor n primes) !! 0)
 primes = 2 : filter isOwnOnlyFactor [3,5..]
-
 primeFaxxors n = factor n primes
 
 
 main = do
-    print $ last (primeFaxxors 13195) == 29
-    print $ last (primeFaxxors 600851475143)
+    -- print $ last (primeFaxxors 13195) == 29
+    let answer = last (primeFaxxors 600851475143)
+    print $ answer

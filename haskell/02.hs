@@ -1,9 +1,9 @@
 {-
-        Sum Even Fibonacci numbers
-	By starting with 1 and 2, the first 10 terms will be:
+    Sum Even Fibonacci numbers
+    By starting with 1 and 2, the first 10 terms will be:
 		1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
 
-	By considering the terms <= four million, find the sum of the even-valued terms.
+    By considering the terms <= four million, find the sum of the even-valued terms.
 -}
 
 -- recursive addsucc
@@ -11,17 +11,11 @@ next x y = z : (next y z)
            where z = x + y
 -- init to Fibonacci and clip leading `1`
 fibs = tail (1 : 1 : next 1 1)
-underCap x = (x <= 4000000)
-answer = sum . filter even . takeWhile underCap $ fibs
 
 main = do
+    let underCap x = (x <= 4000000)
+    let answer = sum . filter even . takeWhile underCap $ fibs
     print $ answer
-
-
-
-
-
-
 
 
 

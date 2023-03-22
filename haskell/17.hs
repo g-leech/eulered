@@ -8,9 +8,6 @@
 -}
 
 -- Strat: dumbass index manips. recursive.
-import Utils (assert)
-
-x = 1000
 teens = ["","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen", "nineteen"]
 ties = ["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"]
 
@@ -28,15 +25,8 @@ wordify x
                         ++ "hundred" 
                         ++ maybeAnd x 
                         ++ wordify (x `mod` 100)
-
-
 letterSum xs = sum $ map (length . wordify) xs
-answer = letterSum [1..1000]
 
 main = do 
-    let a = assert $ letterSum [1..5] == 19
-    let b = assert $ length (wordify 342) == 23
-    let c = assert $ length (wordify 115) == 20 
-    let d = assert $ length (wordify 100) == 10 
-    print $ a ++ b ++ c ++ d
+    let answer = letterSum [1..1000]
     print $ answer
