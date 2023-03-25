@@ -1,15 +1,14 @@
 {-
     Figurate numbers
-
     [8128, 2882, 8281]:
         1. cyclic, abcd -> cdxy
         2. Fits figurate 3-5
         3. a unique solution for (1) and (2)
 
-Find sum of A
+    Find sum of A
 
-A = the only list of 6 unique cd-cyclic 4-digiters 
-    which fits figurate 3-8 
+    A = the only list of 6 unique cd-cyclic 4-digiters 
+        which fits figurate 3-8 
 -}
 
 -- Strat 1: Gen all 4-digiters p3-8, filter on cyclic.
@@ -22,35 +21,37 @@ cyclic x y = xcd == yab
         xcd = x `mod` 100
         yab = y `div` 100 
 
--- Strat 1
-matchCyc x ys = filter (cyclic x) $ concatMap toList ys
-remove x ys = filter (notMember x) ys
--- glorified nested for loop (but contraction mapping)
+-- Strat 1: glorified nested for loop (but contraction mapping)
 -- want one entry from each figurate level
 -- want the final list to loop: `cyclic last first`
--- so we're paring down each set of figurates to just the ones which fit
+-- so pare down each set of figurates to just the ones which fit
 -- TODO: learn metaprogramming
-solve figSets = concat [ [f3s, sansF3s, c, d, e, final] 
-                 | f3s <- toList $ head figSets,
-                   sansF3s <- matchCyc f3s $ tail figSets,
-                   let b = remove sansF3s $ tail figSets,
-                   c <- matchCyc sansF3s b,
-                   let ce = remove c b,
-                   d <- matchCyc c ce,
-                   let de = remove d ce,
-                   e <- matchCyc d de,
-                   let ee = remove e de,
-                   final <- matchCyc e ee,
-                   cyclic final f3s
+solve figSets = [ [f3s, sansF3s, c, d, e, final] 
+                  | f3s <- toList $ head figSets,
+                    let sans = tail figSets,
+                    sansF3s <- matchCyc f3s sans,
+                    let b = remove sansF3s sans,
+                    c <- matchCyc sansF3s b,
+                    let ce = remove c b,
+                    d <- matchCyc c ce,
+                    let de = remove d ce,
+                    e <- matchCyc d de,
+                    let ee = remove e de,
+                    final <- matchCyc e ee,
+                    cyclic final f3s
                 ]
+                where 
+                    matchCyc x ys = filter (cyclic x) flattened
+                        where flattened = concatMap toList ys
+                    remove x ys = filter (notMember x) ys
+
 figurates :: Int -> [Int]
 figurates i = scanl (+) 1 [i-1, 2*i-3 ..]
 figurates3to8 = map (boundSet . figurates) [3..8]
     where boundSet = fromList . takeWhile (< 10000) . dropWhile (< 1011)
-answer = sum $ solve figurates3to8
-
 
 main = do
+    let answer = sum . concat $ solve figurates3to8
     print $ answer
 
 

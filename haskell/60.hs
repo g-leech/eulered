@@ -25,7 +25,6 @@ import Data.List (minimumBy)
         cs = bs concatable with b
         ...
 -}
-limit = 9000 -- arbitrary; found by tinkering
 
 -- helper to append two ints. log10 for length-to-shift. 
 isConcatPrime a b = isPrime ab && isPrime ba
@@ -42,17 +41,20 @@ concatable a xs = filter largeCat xs
 {- contraction search! |cs| < |bs| -}
 -- TODO: must be some metaprogramming way to do this
 -- wiki.haskell.org/A_practical_Template_Haskell_Tutorial
-sets = [ [a,b,c,d,e] | let ps = takeWhile (< limit) primes,
+sets limit = [ [a,b,c,d,e] 
+               | let ps = takeWhile (< limit) primes,
                       a <- ps, let bs = a `concatable` ps,
                       b <- bs, let cs = b `concatable` bs,
                       c <- cs, let ds = c `concatable` cs,
                       d <- ds, let es = d `concatable` ds,
                       e <- es ]
--- absurdly fast if we dishonestly assume 1st is minimal; instead
-answer = minimumBy (compare `on` sum) sets
 
 main = do
-    print $ answer
+    let limit = 9000 -- arbitrary; found by tinkering
+    -- absurdly fast if we dishonestly assume 1st is minimal; instead
+    let answer limit = sum $ minimumBy (compare `on` sum) 
+                        $ sets limit 
+    print $ answer limit
 
 
 
