@@ -9,7 +9,7 @@
     Exactly four continued fractions N < 14 have an odd period.
     How many continued fractions for N < 10001 have an odd period?
 --}
-
+import Data.Fixed (mod')
 {- 
     Strat 1: Use general cont frac formula 
         https://en.wikipedia.org/wiki/Generalized_continued_fraction
@@ -45,10 +45,8 @@ numOddPeriodPartialDenomsUpTo n = sum $ map isOddPeriod nonsquares
             -- use initial values of recurrence relation 
             where period = length . tail $ continu r 0 1
         nonsquares = filter (not . isSquare) [2..n]
-        isSquare x = root == nearest
-            where 
-                root = sqrt $ fromIntegral x
-                nearest = fromIntegral (round root)
+        isSquare x = root `mod'` 1 == 0
+            where root = sqrt $ fromIntegral x
 
 main = do
     -- print $ numOddPeriodPartialDenomsUpTo 13 == 4
