@@ -2,7 +2,7 @@
 
 ### Haskell
 
-Aiming for zero imports.
+Aiming for zero imports I didn't write. 
 
 Optimised for readability (I am not a miser about newlines like actual haskellers). Actually I guess that's not true, since I'm a lazy bastard and never say my types.
 
